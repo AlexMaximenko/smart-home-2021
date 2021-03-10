@@ -1,4 +1,7 @@
-package ru.sbt.mipt.oop;
+package ru.sbt.mipt.oop.smartitems;
+
+import ru.sbt.mipt.oop.smartitems.Door;
+import ru.sbt.mipt.oop.smartitems.Light;
 
 import java.util.Collection;
 
