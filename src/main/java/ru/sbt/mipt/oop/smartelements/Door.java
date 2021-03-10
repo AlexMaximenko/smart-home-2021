@@ -1,4 +1,4 @@
-package ru.sbt.mipt.oop.smartitems;
+package ru.sbt.mipt.oop.smartelements;
 
 public class Door {
     private final String id;

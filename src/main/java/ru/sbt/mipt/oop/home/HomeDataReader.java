@@ -1,5 +1,7 @@
 package ru.sbt.mipt.oop.home;
 
-public interface HomeReader {
-    SmartHome readHome();
+import java.io.IOException;
+
+public interface HomeDataReader {
+    SmartHome readHomeData(String filePath);
 }
