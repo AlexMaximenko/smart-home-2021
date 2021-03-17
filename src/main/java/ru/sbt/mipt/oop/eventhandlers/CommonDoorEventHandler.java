@@ -1,6 +1,5 @@
 package ru.sbt.mipt.oop.eventhandlers;
 
-import ru.sbt.mipt.oop.eventhandlers.specialhandlers.SpecialDoorEventHandler;
 import ru.sbt.mipt.oop.sensor.SensorEvent;
 import ru.sbt.mipt.oop.home.SmartHome;
 import ru.sbt.mipt.oop.smartelements.Door;
