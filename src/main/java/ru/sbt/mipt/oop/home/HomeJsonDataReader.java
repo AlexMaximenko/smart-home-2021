@@ -7,8 +7,13 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 
 public class HomeJsonDataReader implements  HomeDataReader{
+    private String filePath;
+
+    public HomeJsonDataReader(String filePath){
+        this.filePath = filePath;
+    }
     @Override
-    public SmartHome readHomeData(String filePath){
+    public SmartHome readHomeData(){
         Gson gson = new Gson();
         String json = null;
         try {

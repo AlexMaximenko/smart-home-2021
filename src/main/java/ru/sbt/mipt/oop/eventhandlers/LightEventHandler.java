@@ -8,7 +8,7 @@ import ru.sbt.mipt.oop.smartelements.Room;
 
 public class LightEventHandler implements EventHandler{
     @Override
-    public void executeEvent(SmartHome smartHome, SensorEvent sensorEvent) {
+    public void handleEvent(SmartHome smartHome, SensorEvent sensorEvent) {
         if (isLightEvent(sensorEvent))
             this.changeLightState(smartHome, sensorEvent);
     }

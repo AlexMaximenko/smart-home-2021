@@ -10,8 +10,13 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 
 public class HomeJsonDataWriter implements HomeDataWriter{
+    private String filePath;
+
+    public HomeJsonDataWriter(String filePath){
+        this.filePath = filePath;
+    }
     @Override
-    public void writeHomeData(String filePath, SmartHome home) {
+    public void writeHomeData(SmartHome home) {
         Gson gson = new GsonBuilder().setPrettyPrinting().create();
         String jsonString = gson.toJson(home);
         Path path = Paths.get(filePath);

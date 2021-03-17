@@ -6,27 +6,28 @@ import ru.sbt.mipt.oop.sensor.SensorEvent;
 
 import java.util.Collection;
 
-public class EventProcessor {
+public class SensorEventProcessorImpl implements  SensorEventProcessor {
     private final Collection<EventHandler> eventHandlers;
+    private final SensorEventGenerator sensorEventGenerator;
 
-    public EventProcessor(Collection<EventHandler> eventHandlers) {
+    public SensorEventProcessorImpl(Collection<EventHandler> eventHandlers, SensorEventGenerator sensorEventGenerator) {
         this.eventHandlers = eventHandlers;
+        this.sensorEventGenerator = sensorEventGenerator;
     }
 
     public void startProcessingLoop(SmartHome smartHome){
-        EventGenerator eventGenerator = new EventGenerator();
-        SensorEvent sensorEvent = eventGenerator.getNextSensorEvent();
+        SensorEvent sensorEvent = sensorEventGenerator.getNextSensorEvent();
 
         while (sensorEvent != null){
             System.out.println("Got event: " + sensorEvent);
             this.processEvent(smartHome, sensorEvent);
-            sensorEvent = eventGenerator.getNextSensorEvent();
+            sensorEvent = sensorEventGenerator.getNextSensorEvent();
         }
     }
 
     private void processEvent(SmartHome smartHome, SensorEvent sensorEvent){
         for (EventHandler eventHandler : this.eventHandlers) {
-            eventHandler.executeEvent(smartHome, sensorEvent);
+            eventHandler.handleEvent(smartHome, sensorEvent);
         }
     }
 }

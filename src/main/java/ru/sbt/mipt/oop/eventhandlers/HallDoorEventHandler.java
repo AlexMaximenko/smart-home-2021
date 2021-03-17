@@ -1,5 +1,6 @@
-package ru.sbt.mipt.oop.eventhandlers.specialhandlers;
+package ru.sbt.mipt.oop.eventhandlers;
 
+import ru.sbt.mipt.oop.eventhandlers.specialhandlers.SpecialDoorEventHandler;
 import ru.sbt.mipt.oop.home.SmartHome;
 import ru.sbt.mipt.oop.sensor.CommandType;
 import ru.sbt.mipt.oop.sensor.SensorCommand;
@@ -9,9 +10,9 @@ import ru.sbt.mipt.oop.smartelements.Door;
 import ru.sbt.mipt.oop.smartelements.Light;
 import ru.sbt.mipt.oop.smartelements.Room;
 
-public class HallDoorEventHandler implements SpecialDoorEventHandler{
+public class HallDoorEventHandler implements EventHandler {
     @Override
-    public void specialExecution(SmartHome smartHome, SensorEvent sensorEvent) {
+    public void handleEvent(SmartHome smartHome, SensorEvent sensorEvent) {
         if (isHallDoorEvent(smartHome, sensorEvent)){
             if (sensorEvent.getType().equals(SensorEventType.DOOR_CLOSED)) {
                 this.turnOffLights(smartHome);

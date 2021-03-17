@@ -12,29 +12,14 @@ import static ru.sbt.mipt.oop.sensor.SensorEventType.DOOR_CLOSED;
 import static ru.sbt.mipt.oop.sensor.SensorEventType.DOOR_OPEN;
 
 public class CommonDoorEventHandler implements EventHandler {
-    private final Collection<SpecialDoorEventHandler> specialDoorEventHandlers;
-
-    public CommonDoorEventHandler(Collection<SpecialDoorEventHandler> specialDoorEventHandlers) {
-        this.specialDoorEventHandlers = specialDoorEventHandlers;
-    }
-
-    public CommonDoorEventHandler(){
-        specialDoorEventHandlers = null;
-    }
-
     @Override
-    public void executeEvent(SmartHome smartHome, SensorEvent sensorEvent) {
+    public void handleEvent(SmartHome smartHome, SensorEvent sensorEvent) {
         if (this.isDoorEvent(smartHome, sensorEvent)) {
             this.changeDoorState(smartHome, sensorEvent);
-            if (specialDoorEventHandlers != null) {
-                for (SpecialDoorEventHandler specialDoorEventHandler : specialDoorEventHandlers) {
-                    specialDoorEventHandler.specialExecution(smartHome, sensorEvent);
-                }
-            }
         }
     }
 
-    protected void changeDoorState(SmartHome smartHome, SensorEvent sensorEvent){
+    private void changeDoorState(SmartHome smartHome, SensorEvent sensorEvent){
         for (Room room : smartHome.getRooms()) {
             for (Door door : room.getDoors()) {
                 if (door.getId().equals(sensorEvent.getObjectId())) {
