@@ -1,33 +1,31 @@
 package ru.sbt.mipt.oop.eventhandlers;
 
+import ru.sbt.mipt.oop.action.Action;
+import ru.sbt.mipt.oop.home.HomeUtils;
 import ru.sbt.mipt.oop.sensor.SensorEvent;
 import ru.sbt.mipt.oop.home.SmartHome;
 import ru.sbt.mipt.oop.sensor.SensorEventType;
 import ru.sbt.mipt.oop.smartelements.Light;
-import ru.sbt.mipt.oop.smartelements.Room;
 
 public class LightEventHandler implements EventHandler{
     @Override
     public void handleEvent(SmartHome smartHome, SensorEvent sensorEvent) {
-        if (isLightEvent(sensorEvent))
-            this.changeLightState(smartHome, sensorEvent);
-    }
-
-    private void changeLightState(SmartHome smartHome, SensorEvent sensorEvent){
-        for (Room room : smartHome.getRooms()) {
-            for (Light light : room.getLights()) {
-                if (light.getId().equals(sensorEvent.getObjectId())) {
-                    if (sensorEvent.getType().equals(SensorEventType.LIGHT_ON)) {
-                        light.setOn(true);
-                        System.out.println("Light " + light.getId() + " in room " + room.getName() + " was turned on.");
-                    }
-                    else {
-                        light.setOn(false);
-                        System.out.println("Light " + light.getId() + " in room " + room.getName() + " was turned off.");
-                    }
+        if (!isLightEvent(sensorEvent)) return;
+        boolean newState = sensorEvent.getType() == SensorEventType.LIGHT_ON;
+        smartHome.execute(new Action() {
+            @Override
+            public void execute(Object object) {
+                if (!(object instanceof Light)) return;
+                if (sensorEvent.getObjectId().equals(((Light) object).getId())) {
+                    updateLightState((Light) object, newState);
                 }
             }
-        }
+        });
+    }
+
+    private void updateLightState(Light light, boolean newState) {
+        light.setOn(newState);
+        System.out.println("Light " + light.getId() + " was turned " + (newState ? "on." : "off."));
     }
 
     private boolean isLightEvent(SensorEvent sensorEvent) {

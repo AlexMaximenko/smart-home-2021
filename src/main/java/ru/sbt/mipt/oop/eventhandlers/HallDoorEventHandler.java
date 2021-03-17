@@ -1,5 +1,7 @@
 package ru.sbt.mipt.oop.eventhandlers;
 
+import ru.sbt.mipt.oop.action.Action;
+import ru.sbt.mipt.oop.home.HomeUtils;
 import ru.sbt.mipt.oop.home.SmartHome;
 import ru.sbt.mipt.oop.sensor.CommandType;
 import ru.sbt.mipt.oop.sensor.SensorCommand;
@@ -10,36 +12,35 @@ import ru.sbt.mipt.oop.smartelements.Light;
 import ru.sbt.mipt.oop.smartelements.Room;
 
 public class HallDoorEventHandler implements EventHandler {
+
+
     @Override
-    public void handleEvent(SmartHome smartHome, SensorEvent sensorEvent) {
-        if (isHallDoorEvent(smartHome, sensorEvent)){
-            if (sensorEvent.getType().equals(SensorEventType.DOOR_CLOSED)) {
-                this.turnOffLights(smartHome);
-            }
+    public void handleEvent(SmartHome smartHome, SensorEvent sensorEvent){
+        if (!isHallDoorEvent(smartHome, sensorEvent)) return;
+        if (sensorEvent.getType() == SensorEventType.DOOR_CLOSED) {
+            smartHome.execute(new Action() {
+                @Override
+                public void execute(Object object) {
+                    if (!(object instanceof Light)) return;
+                    turnOffLight((Light) object);
+                }
+            });
         }
     }
 
-    private void turnOffLights(SmartHome smartHome){
-        for (Room homeRoom : smartHome.getRooms()) {
-            for (Light light : homeRoom.getLights()) {
-                light.setOn(false);
-                SensorCommand command = new SensorCommand(CommandType.LIGHT_OFF, light.getId());
-                System.out.println("Pretend we're sending command " + command);
-            }
-        }
+    private void turnOffLight(Light light){
+        light.setOn(false);
+        System.out.println("Light " + light.getId() + " was turned off because of closing hall door.");
     }
 
     private boolean isHallDoorEvent(SmartHome smartHome, SensorEvent sensorEvent){
-        for (Room room : smartHome.getRooms()){
-            for (Door door : room.getDoors()){
-                if (door.getId().equals(sensorEvent.getObjectId())) {
-                    if (room.getName().equals("hall"))
-                        return true;
-                    else
-                        return false;
-                }
-            }
+        if (!(sensorEvent.getType() == SensorEventType.DOOR_CLOSED || sensorEvent.getType() == SensorEventType.DOOR_OPEN))
+        {
+            return false;
         }
+        Room eventRoom = HomeUtils.findRoomOfDoor(smartHome, sensorEvent.getObjectId());
+        if (eventRoom == null) return false;
+        if (eventRoom.getName().equals("hall")) return true;
         return false;
     }
 }
