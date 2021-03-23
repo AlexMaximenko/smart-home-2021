@@ -12,13 +12,10 @@ public class LightEventHandler implements EventHandler{
     public void handleEvent(SmartHome smartHome, SensorEvent sensorEvent) {
         if (!isLightEvent(sensorEvent)) return;
         boolean newState = sensorEvent.getType() == SensorEventType.LIGHT_ON;
-        smartHome.execute(new Action() {
-            @Override
-            public void execute(Object object) {
-                if (!(object instanceof Light)) return;
-                if (sensorEvent.getObjectId().equals(((Light) object).getId())) {
+        smartHome.execute((object) -> {
+            if (!(object instanceof Light)) return;
+            if (sensorEvent.getObjectId().equals(((Light) object).getId())) {
                     updateLightState((Light) object, newState);
-                }
             }
         });
     }

@@ -18,12 +18,9 @@ public class HallDoorEventHandler implements EventHandler {
     public void handleEvent(SmartHome smartHome, SensorEvent sensorEvent){
         if (!isHallDoorEvent(smartHome, sensorEvent)) return;
         if (sensorEvent.getType() == SensorEventType.DOOR_CLOSED) {
-            smartHome.execute(new Action() {
-                @Override
-                public void execute(Object object) {
-                    if (!(object instanceof Light)) return;
-                    turnOffLight((Light) object);
-                }
+            smartHome.execute((object) -> {
+                if (!(object instanceof Light)) return;
+                turnOffLight((Light) object);
             });
         }
     }

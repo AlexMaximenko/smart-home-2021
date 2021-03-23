@@ -14,13 +14,10 @@ public class DoorEventHandler implements EventHandler {
         if (!isDoorEvent(smartHome, sensorEvent)) return;
         boolean newState = sensorEvent.getType() == DOOR_OPEN;
 
-        smartHome.execute(new Action() {
-            @Override
-            public void execute(Object object) {
-                if (!(object instanceof Door)) return;
-                if (sensorEvent.getObjectId().equals(((Door) object).getId())) {
+        smartHome.execute((object) -> {
+            if (!(object instanceof Door)) return;
+            if (sensorEvent.getObjectId().equals(((Door) object).getId())) {
                     updateDoorState( (Door) object, newState);
-                }
             }
         });
     }
