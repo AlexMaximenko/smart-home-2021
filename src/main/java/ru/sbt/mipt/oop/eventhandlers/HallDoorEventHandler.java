@@ -1,10 +1,7 @@
 package ru.sbt.mipt.oop.eventhandlers;
 
 import ru.sbt.mipt.oop.action.Action;
-import ru.sbt.mipt.oop.home.HomeUtils;
 import ru.sbt.mipt.oop.home.SmartHome;
-import ru.sbt.mipt.oop.sensor.CommandType;
-import ru.sbt.mipt.oop.sensor.SensorCommand;
 import ru.sbt.mipt.oop.sensor.SensorEvent;
 import ru.sbt.mipt.oop.sensor.SensorEventType;
 import ru.sbt.mipt.oop.smartelements.Door;
@@ -13,16 +10,15 @@ import ru.sbt.mipt.oop.smartelements.Room;
 
 public class HallDoorEventHandler implements EventHandler {
 
-
     @Override
     public void handleEvent(SmartHome smartHome, SensorEvent sensorEvent){
-        if (!isHallDoorEvent(smartHome, sensorEvent)) return;
-        if (sensorEvent.getType() == SensorEventType.DOOR_CLOSED) {
-            smartHome.execute((object) -> {
-                if (!(object instanceof Light)) return;
+        if (!isValidEvent(smartHome, sensorEvent)) return;
+
+        smartHome.execute((object) -> {
+            if (object instanceof Light){
                 turnOffLight((Light) object);
-            });
-        }
+            }
+        });
     }
 
     private void turnOffLight(Light light){
@@ -30,14 +26,38 @@ public class HallDoorEventHandler implements EventHandler {
         System.out.println("Light " + light.getId() + " was turned off because of closing hall door.");
     }
 
-    private boolean isHallDoorEvent(SmartHome smartHome, SensorEvent sensorEvent){
-        if (!(sensorEvent.getType() == SensorEventType.DOOR_CLOSED || sensorEvent.getType() == SensorEventType.DOOR_OPEN))
-        {
+    private boolean isValidEvent(SmartHome smartHome, SensorEvent sensorEvent) {
+        if (!(sensorEvent.getType() == SensorEventType.DOOR_CLOSED)) {
             return false;
         }
-        Room eventRoom = HomeUtils.findRoomOfDoor(smartHome, sensorEvent.getObjectId());
-        if (eventRoom == null) return false;
-        if (eventRoom.getName().equals("hall")) return true;
-        return false;
+        IsHallDoorAction action = new IsHallDoorAction(sensorEvent.getObjectId());
+        smartHome.execute(action);
+        return action.isHallDoor;
+    }
+
+    private class  IsHallDoorAction implements Action {
+        private boolean isHallDoor = false;
+        private final String id;
+        private String roomName = "";
+
+        private IsHallDoorAction(String id) {
+            this.id = id;
+        }
+
+        @Override
+        public void execute(Object object) {
+            if (isHallDoor) {
+                return;
+            }
+            if (object instanceof Room){
+                roomName = ((Room) object).getName();
+            }
+            if (object instanceof Door){
+                Door door = (Door) object;
+                if (roomName.equals("hall") && door.getId().equals(id)){
+                    isHallDoor = true;
+                }
+            }
+        }
     }
 }

@@ -1,7 +1,5 @@
 package ru.sbt.mipt.oop.eventhandlers;
 
-import ru.sbt.mipt.oop.action.Action;
-import ru.sbt.mipt.oop.home.HomeUtils;
 import ru.sbt.mipt.oop.sensor.SensorEvent;
 import ru.sbt.mipt.oop.home.SmartHome;
 import ru.sbt.mipt.oop.sensor.SensorEventType;
