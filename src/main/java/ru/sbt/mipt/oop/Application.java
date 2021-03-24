@@ -1,15 +1,15 @@
 package ru.sbt.mipt.oop;
 
-import ru.sbt.mipt.oop.eventhandlers.DoorEventHandler;
-import ru.sbt.mipt.oop.eventhandlers.EventHandler;
-import ru.sbt.mipt.oop.eventhandlers.LightEventHandler;
-import ru.sbt.mipt.oop.eventhandlers.HallDoorEventHandler;
-import ru.sbt.mipt.oop.eventmanagement.RandomSensorEventGenerator;
-import ru.sbt.mipt.oop.eventmanagement.SensorEventProcessor;
-import ru.sbt.mipt.oop.eventmanagement.SensorEventProcessorImpl;
-import ru.sbt.mipt.oop.home.HomeDataReader;
-import ru.sbt.mipt.oop.home.HomeJsonDataReader;
-import ru.sbt.mipt.oop.home.SmartHome;
+import ru.sbt.mipt.oop.events.handlers.DoorEventHandler;
+import ru.sbt.mipt.oop.events.handlers.EventHandler;
+import ru.sbt.mipt.oop.events.handlers.HallDoorEventHandler;
+import ru.sbt.mipt.oop.events.handlers.LightEventHandler;
+import ru.sbt.mipt.oop.events.management.RandomSensorEventGenerator;
+import ru.sbt.mipt.oop.events.management.SensorEventProcessor;
+import ru.sbt.mipt.oop.events.management.SensorEventProcessorImpl;
+import ru.sbt.mipt.oop.homereader.HomeDataReader;
+import ru.sbt.mipt.oop.homereader.HomeJsonDataReader;
+import ru.sbt.mipt.oop.smartelements.SmartHome;
 
 import java.io.IOException;
 import java.util.Arrays;

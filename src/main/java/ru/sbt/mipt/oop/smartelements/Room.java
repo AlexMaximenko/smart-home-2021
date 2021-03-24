@@ -1,9 +1,8 @@
 package ru.sbt.mipt.oop.smartelements;
 
-import ru.sbt.mipt.oop.action.Action;
-import ru.sbt.mipt.oop.action.Actionable;
+import ru.sbt.mipt.oop.Action;
+import ru.sbt.mipt.oop.Actionable;
 
-import javax.accessibility.Accessible;
 import java.util.Collection;
 
 public class Room implements Actionable {
