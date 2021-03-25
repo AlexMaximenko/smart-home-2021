@@ -7,8 +7,14 @@ import ru.sbt.mipt.oop.smartelements.Light;
 import ru.sbt.mipt.oop.smartelements.SmartHome;
 
 public class LightEventHandler implements EventHandler{
+    private final SmartHome smartHome;
+
+    public LightEventHandler(SmartHome smartHome) {
+        this.smartHome = smartHome;
+    }
+
     @Override
-    public void handleEvent(SmartHome smartHome, Event event) {
+    public void handleEvent(Event event) {
         if (!isLightEvent(event)) return;
         boolean newState = event.getType() == SensorEventType.LIGHT_ON;
         smartHome.execute((object) -> {

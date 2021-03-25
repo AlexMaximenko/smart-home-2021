@@ -10,9 +10,14 @@ import ru.sbt.mipt.oop.smartelements.Room;
 import ru.sbt.mipt.oop.smartelements.SmartHome;
 
 public class HallDoorEventHandler implements EventHandler {
+    private final SmartHome smartHome;
+
+    public HallDoorEventHandler(SmartHome smartHome) {
+        this.smartHome = smartHome;
+    }
 
     @Override
-    public void handleEvent(SmartHome smartHome, Event event){
+    public void handleEvent(Event event){
         if (!isValidEvent(smartHome, event)) return;
 
         smartHome.execute((object) -> {

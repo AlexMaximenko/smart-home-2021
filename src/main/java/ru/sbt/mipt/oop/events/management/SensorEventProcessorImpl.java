@@ -27,7 +27,7 @@ public class SensorEventProcessorImpl implements  SensorEventProcessor {
 
     private void processEvent(SmartHome smartHome, SensorEvent sensorEvent){
         for (EventHandler eventHandler : this.eventHandlers) {
-            eventHandler.handleEvent(smartHome, sensorEvent);
+            eventHandler.handleEvent(sensorEvent);
         }
     }
 }

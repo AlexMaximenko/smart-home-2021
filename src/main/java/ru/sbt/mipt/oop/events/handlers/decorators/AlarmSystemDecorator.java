@@ -5,7 +5,6 @@ import ru.sbt.mipt.oop.alarm.alarmstates.ActivatedState;
 import ru.sbt.mipt.oop.alarm.alarmstates.EmergencyState;
 import ru.sbt.mipt.oop.events.Event;
 import ru.sbt.mipt.oop.events.handlers.EventHandler;
-import ru.sbt.mipt.oop.smartelements.SmartHome;
 
 public class AlarmSystemDecorator extends EventHandlerDecorator{
     private final AlarmSystem alarmSystem;
@@ -16,7 +15,7 @@ public class AlarmSystemDecorator extends EventHandlerDecorator{
     }
 
     @Override
-    public void handleEvent(SmartHome smartHome, Event event) {
+    public void handleEvent(Event event) {
         if (alarmSystem.getState() instanceof ActivatedState){
             alarmSystem.raiseAlarm();
         }
@@ -24,7 +23,7 @@ public class AlarmSystemDecorator extends EventHandlerDecorator{
             System.out.println("Включен режим тревоги, события не обрабатываются, отправлено смс.");
         }
         else{
-            eventHandler.handleEvent(smartHome, event);
+            eventHandler.handleEvent(event);
         }
     }
 }

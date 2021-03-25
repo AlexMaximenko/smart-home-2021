@@ -25,9 +25,9 @@ public class Application {
 
         // начинаем цикл обработки событий
         Collection<EventHandler> eventHandlers = Arrays.asList(
-                new LightEventHandler(),
-                new DoorEventHandler(),
-                new HallDoorEventHandler());
+                new LightEventHandler(smartHome),
+                new DoorEventHandler(smartHome),
+                new HallDoorEventHandler(smartHome));
 
         SensorEventProcessor eventProcessor = new SensorEventProcessorImpl(eventHandlers, new RandomSensorEventGenerator());
         eventProcessor.startProcessingLoop(smartHome);

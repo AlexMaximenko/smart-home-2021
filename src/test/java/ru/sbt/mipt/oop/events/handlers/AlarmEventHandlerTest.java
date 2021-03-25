@@ -24,7 +24,7 @@ class AlarmEventHandlerTest {
         AlarmSystem alarmSystem = new AlarmSystem(smartHome);
         AlarmEventHandler handler = new AlarmEventHandler(alarmSystem);
         AlarmEvent event = new AlarmEvent(AlarmEventType.ALARM_ACTIVATE, "java");
-        handler.handleEvent(smartHome, event);
+        handler.handleEvent(event);
         assert(alarmSystem.getState() instanceof ActivatedState);
     }
 
@@ -38,7 +38,7 @@ class AlarmEventHandlerTest {
         AlarmEventHandler handler = new AlarmEventHandler(alarmSystem);
         alarmSystem.activate("java");
         AlarmEvent event = new AlarmEvent(AlarmEventType.ALARM_DEACTIVATE, "java");
-        handler.handleEvent(smartHome, event);
+        handler.handleEvent(event);
         assert(alarmSystem.getState() instanceof DeactivatedState);
     }
 
@@ -52,7 +52,7 @@ class AlarmEventHandlerTest {
         AlarmEventHandler handler = new AlarmEventHandler(alarmSystem);
         alarmSystem.activate("java");
         AlarmEvent event = new AlarmEvent(AlarmEventType.ALARM_DEACTIVATE, "not_java");
-        handler.handleEvent(smartHome, event);
+        handler.handleEvent(event);
         assert(alarmSystem.getState() instanceof EmergencyState);
     }
 }
