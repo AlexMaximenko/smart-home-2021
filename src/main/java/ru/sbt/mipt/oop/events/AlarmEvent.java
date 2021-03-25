@@ -17,4 +17,12 @@ public class AlarmEvent implements Event {
     public String getCode() {
         return code;
     }
+
+    @Override
+    public String toString() {
+        return "AlarmEvent{" +
+                "type=" + type +
+                ", code='" + code + '\'' +
+                '}';
+    }
 }

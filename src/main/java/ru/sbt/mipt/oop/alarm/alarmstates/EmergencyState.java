@@ -11,11 +11,11 @@ public class EmergencyState implements AlarmSystemState {
 
     @Override
     public void activate(String code) {
-        throw new IllegalStateException("Сигнализация в режиме тревоги, ее нельзя включить.");
+        System.out.println("Сигнализация в режиме тревоги, ее нельзя включить.");
     }
 
     @Override
     public void deactivate(String code) {
-        throw new IllegalStateException("Сигнализация в режиме тревоги, ее нельзя отключить.");
+        System.out.println("Сигнализация в режиме тревоги, ее нельзя отключить.");
     }
 }

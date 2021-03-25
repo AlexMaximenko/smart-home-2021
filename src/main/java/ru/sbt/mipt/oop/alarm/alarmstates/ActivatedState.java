@@ -13,7 +13,7 @@ public class ActivatedState implements AlarmSystemState {
 
     @Override
     public void activate(String code) {
-        throw new IllegalStateException("Попытка активировать уже активированную сигнализацию");
+        System.out.println("Попытка активировать уже активированную сигнализацию");
     }
 
     @Override

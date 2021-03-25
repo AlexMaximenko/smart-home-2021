@@ -17,6 +17,6 @@ public class DeactivatedState implements AlarmSystemState {
 
     @Override
     public void deactivate(String code) {
-        throw new IllegalStateException("Попытка выключить выключенную сигнализацию");
+        System.out.println("Попытка выключить выключенную сигнализацию");
     }
 }
