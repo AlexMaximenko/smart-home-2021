@@ -9,21 +9,29 @@ public class RandomEventGenerator implements EventGenerator {
     public Event getNextEvent() {
         // pretend like we're getting the events from physical world, but here we're going to just generate some random events
         if (Math.random() < 0.05) return null; // null means end of event stream
-        EventType eventType = EventType.values()[(int) (6 * Math.random())];
-        if (!(isAlarmEventType(eventType))) {
-            String objectId = "" + ((int) (10 * Math.random()));
-            return new SensorEvent(eventType, objectId);
+        if (Math.random() < 0.75) {
+            return generateSensorEvent();
         }
         else {
-            String code;
-            if (Math.random() > 0.5){
-                code = "java";
-            }
-            else{
-                code = "not_java";
-            }
-            return new AlarmEvent(eventType, code);
+            return generateAlarmEvent();
         }
+    }
+
+    private AlarmEvent generateAlarmEvent(){
+        EventType eventType = EventType.values()[(int) (4 + 2 * Math.random())];
+        if (Math.random() < 0.75) {
+            return new AlarmEvent(eventType, "java");
+        }
+        else {
+            return new AlarmEvent(eventType, "not_java");
+        }
+
+    }
+
+    private SensorEvent generateSensorEvent(){
+        EventType eventType = EventType.values()[(int) (4 * Math.random())];
+        String objectId = "" + ((int) (10 * Math.random()));
+        return new SensorEvent(eventType, objectId);
     }
 
     private boolean isAlarmEventType(EventType eventType){
