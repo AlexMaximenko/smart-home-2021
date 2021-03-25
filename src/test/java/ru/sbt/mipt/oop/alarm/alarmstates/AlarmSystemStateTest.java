@@ -4,13 +4,11 @@ import org.junit.jupiter.api.Test;
 import ru.sbt.mipt.oop.alarm.AlarmSystem;
 import ru.sbt.mipt.oop.smartelements.SmartHome;
 
-import static org.junit.jupiter.api.Assertions.*;
-
 class AlarmSystemStateTest {
     @Test
     void testActivation(){
         SmartHome smartHome = new SmartHome();
-        AlarmSystem alarmSystem = new AlarmSystem(smartHome);
+        AlarmSystem alarmSystem = new AlarmSystem();
         alarmSystem.activate("java");
         assert(alarmSystem.getState() instanceof ActivatedState);
     }
@@ -18,7 +16,7 @@ class AlarmSystemStateTest {
     @Test
     void testCorrectDeactivation(){
         SmartHome smartHome = new SmartHome();
-        AlarmSystem alarmSystem = new AlarmSystem(smartHome);
+        AlarmSystem alarmSystem = new AlarmSystem();
         alarmSystem.activate("java");
         alarmSystem.deactivate("java");
         assert(alarmSystem.getState() instanceof DeactivatedState);
@@ -27,7 +25,7 @@ class AlarmSystemStateTest {
     @Test
     void testIncorrectDeactivation(){
         SmartHome smartHome = new SmartHome();
-        AlarmSystem alarmSystem = new AlarmSystem(smartHome);
+        AlarmSystem alarmSystem = new AlarmSystem();
         alarmSystem.activate("java");
         alarmSystem.deactivate("not_java");
         assert(alarmSystem.getState() instanceof EmergencyState);
@@ -36,7 +34,7 @@ class AlarmSystemStateTest {
     @Test
     void testEmergencyState(){
         SmartHome smartHome = new SmartHome();
-        AlarmSystem alarmSystem = new AlarmSystem(smartHome);
+        AlarmSystem alarmSystem = new AlarmSystem();
         alarmSystem.raiseAlarm();
         assert(alarmSystem.getState() instanceof EmergencyState);
 

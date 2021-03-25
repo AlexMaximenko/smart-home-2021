@@ -3,15 +3,12 @@ package ru.sbt.mipt.oop.alarm;
 import ru.sbt.mipt.oop.alarm.alarmstates.AlarmSystemState;
 import ru.sbt.mipt.oop.alarm.alarmstates.DeactivatedState;
 import ru.sbt.mipt.oop.alarm.alarmstates.EmergencyState;
-import ru.sbt.mipt.oop.smartelements.SmartHome;
 
 public class AlarmSystem {
-    private final SmartHome smartHome;
     private AlarmSystemState state;
     private String code;
 
-    public AlarmSystem(SmartHome smartHome) {
-        this.smartHome = smartHome;
+    public AlarmSystem() {
         this.state = new DeactivatedState(this);
         this.code = null;
     }
