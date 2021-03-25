@@ -2,8 +2,8 @@ package ru.sbt.mipt.oop.events.handlers;
 
 import ru.sbt.mipt.oop.*;
 import ru.sbt.mipt.oop.events.Event;
+import ru.sbt.mipt.oop.events.EventType;
 import ru.sbt.mipt.oop.events.SensorEvent;
-import ru.sbt.mipt.oop.events.SensorEventType;
 import ru.sbt.mipt.oop.smartelements.Door;
 import ru.sbt.mipt.oop.smartelements.Light;
 import ru.sbt.mipt.oop.smartelements.Room;
@@ -33,7 +33,7 @@ public class HallDoorEventHandler implements EventHandler {
     }
 
     private boolean isValidEvent(SmartHome smartHome, Event event) {
-        if (!(event.getType() == SensorEventType.DOOR_CLOSED)) {
+        if (!(event.getType() == EventType.DOOR_CLOSED)) {
             return false;
         }
         IsHallDoorAction action = new IsHallDoorAction(((SensorEvent)event).getObjectId());

@@ -1,16 +1,16 @@
 package ru.sbt.mipt.oop.events;
 
 public class AlarmEvent implements Event {
-    private final AlarmEventType type;
+    private final EventType type;
     private final String code;
 
 
-    public AlarmEvent(AlarmEventType type, String code) {
+    public AlarmEvent(EventType type, String code) {
         this.type = type;
         this.code = code;
     }
 
-    public AlarmEventType getType() {
+    public EventType getType() {
         return type;
     }
 

@@ -1,9 +1,10 @@
 package ru.sbt.mipt.oop.events.handlers;
 
 import org.junit.jupiter.api.Test;
+import ru.sbt.mipt.oop.events.EventType;
 import ru.sbt.mipt.oop.smartelements.SmartHome;
 import ru.sbt.mipt.oop.events.SensorEvent;
-import ru.sbt.mipt.oop.events.SensorEventType;
+import ru.sbt.mipt.oop.events.EventType;
 import ru.sbt.mipt.oop.smartelements.Light;
 import ru.sbt.mipt.oop.smartelements.Room;
 
@@ -18,8 +19,8 @@ class LightEventHandlerTest {
         Room room = new Room(Arrays.asList(light1, light2), Collections.emptyList(), "testRoom");
         SmartHome smartHome = new SmartHome(Arrays.asList(room));
         LightEventHandler handler = new LightEventHandler(smartHome);
-        SensorEvent lightOn1 = new SensorEvent(SensorEventType.LIGHT_ON, "1");
-        SensorEvent lightOn2 = new SensorEvent(SensorEventType.LIGHT_ON, "2");
+        SensorEvent lightOn1 = new SensorEvent(EventType.LIGHT_ON, "1");
+        SensorEvent lightOn2 = new SensorEvent(EventType.LIGHT_ON, "2");
         handler.handleEvent(lightOn1);
         handler.handleEvent(lightOn2);
         assert(light1.isOn());
@@ -34,8 +35,8 @@ class LightEventHandlerTest {
         SmartHome smartHome = new SmartHome(Arrays.asList(room));
         LightEventHandler handler = new LightEventHandler(smartHome);
 
-        SensorEvent lightOn1 = new SensorEvent(SensorEventType.LIGHT_OFF, "1");
-        SensorEvent lightOn2 = new SensorEvent(SensorEventType.LIGHT_OFF, "2");
+        SensorEvent lightOn1 = new SensorEvent(EventType.LIGHT_OFF, "1");
+        SensorEvent lightOn2 = new SensorEvent(EventType.LIGHT_OFF, "2");
         handler.handleEvent(lightOn1);
         handler.handleEvent(lightOn2);
         assert(!light1.isOn());

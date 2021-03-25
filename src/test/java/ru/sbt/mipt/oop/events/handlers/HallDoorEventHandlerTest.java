@@ -1,9 +1,9 @@
 package ru.sbt.mipt.oop.events.handlers;
 
 import org.junit.jupiter.api.Test;
+import ru.sbt.mipt.oop.events.EventType;
 import ru.sbt.mipt.oop.smartelements.SmartHome;
 import ru.sbt.mipt.oop.events.SensorEvent;
-import ru.sbt.mipt.oop.events.SensorEventType;
 import ru.sbt.mipt.oop.smartelements.Door;
 import ru.sbt.mipt.oop.smartelements.Light;
 import ru.sbt.mipt.oop.smartelements.Room;
@@ -22,7 +22,7 @@ class HallDoorEventHandlerTest {
         Room roomHall = new Room(Arrays.asList(lightHall), Arrays.asList(doorHall), "hall");
         SmartHome smartHome = new SmartHome(Arrays.asList(roomBath, roomHall));
         HallDoorEventHandler handler= new HallDoorEventHandler(smartHome);
-        SensorEvent hallDoorClosed = new SensorEvent(SensorEventType.DOOR_CLOSED, "hallDoor");
+        SensorEvent hallDoorClosed = new SensorEvent(EventType.DOOR_CLOSED, "hallDoor");
         handler.handleEvent(hallDoorClosed);
         assert(!lightBath.isOn());
         assert(!lightHall.isOn());
@@ -38,7 +38,7 @@ class HallDoorEventHandlerTest {
         Room roomHall = new Room(Arrays.asList(lightHall), Arrays.asList(doorHall), "hall");
         SmartHome smartHome = new SmartHome(Arrays.asList(roomBath, roomHall));
         HallDoorEventHandler handler= new HallDoorEventHandler(smartHome);
-        SensorEvent hallDoorClosed = new SensorEvent(SensorEventType.DOOR_CLOSED, "bathDoor");
+        SensorEvent hallDoorClosed = new SensorEvent(EventType.DOOR_CLOSED, "bathDoor");
         handler.handleEvent(hallDoorClosed);
         assert(lightBath.isOn());
         assert(!lightHall.isOn());

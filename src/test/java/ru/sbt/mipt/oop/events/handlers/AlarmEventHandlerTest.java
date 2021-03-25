@@ -6,7 +6,8 @@ import ru.sbt.mipt.oop.alarm.alarmstates.ActivatedState;
 import ru.sbt.mipt.oop.alarm.alarmstates.DeactivatedState;
 import ru.sbt.mipt.oop.alarm.alarmstates.EmergencyState;
 import ru.sbt.mipt.oop.events.AlarmEvent;
-import ru.sbt.mipt.oop.events.AlarmEventType;
+import ru.sbt.mipt.oop.events.EventType;
+import ru.sbt.mipt.oop.events.EventType;
 import ru.sbt.mipt.oop.smartelements.Door;
 import ru.sbt.mipt.oop.smartelements.Room;
 import ru.sbt.mipt.oop.smartelements.SmartHome;
@@ -23,7 +24,7 @@ class AlarmEventHandlerTest {
         SmartHome smartHome = new SmartHome(Arrays.asList(room));
         AlarmSystem alarmSystem = new AlarmSystem(smartHome);
         AlarmEventHandler handler = new AlarmEventHandler(alarmSystem);
-        AlarmEvent event = new AlarmEvent(AlarmEventType.ALARM_ACTIVATE, "java");
+        AlarmEvent event = new AlarmEvent(EventType.ALARM_ACTIVATE, "java");
         handler.handleEvent(event);
         assert(alarmSystem.getState() instanceof ActivatedState);
     }
@@ -37,7 +38,7 @@ class AlarmEventHandlerTest {
         AlarmSystem alarmSystem = new AlarmSystem(smartHome);
         AlarmEventHandler handler = new AlarmEventHandler(alarmSystem);
         alarmSystem.activate("java");
-        AlarmEvent event = new AlarmEvent(AlarmEventType.ALARM_DEACTIVATE, "java");
+        AlarmEvent event = new AlarmEvent(EventType.ALARM_DEACTIVATE, "java");
         handler.handleEvent(event);
         assert(alarmSystem.getState() instanceof DeactivatedState);
     }
@@ -51,7 +52,7 @@ class AlarmEventHandlerTest {
         AlarmSystem alarmSystem = new AlarmSystem(smartHome);
         AlarmEventHandler handler = new AlarmEventHandler(alarmSystem);
         alarmSystem.activate("java");
-        AlarmEvent event = new AlarmEvent(AlarmEventType.ALARM_DEACTIVATE, "not_java");
+        AlarmEvent event = new AlarmEvent(EventType.ALARM_DEACTIVATE, "not_java");
         handler.handleEvent(event);
         assert(alarmSystem.getState() instanceof EmergencyState);
     }

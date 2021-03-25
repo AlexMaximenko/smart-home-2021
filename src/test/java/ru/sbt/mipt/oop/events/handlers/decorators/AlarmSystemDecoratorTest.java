@@ -3,7 +3,7 @@ package ru.sbt.mipt.oop.events.handlers.decorators;
 import org.junit.jupiter.api.Test;
 import ru.sbt.mipt.oop.alarm.AlarmSystem;
 import ru.sbt.mipt.oop.events.SensorEvent;
-import ru.sbt.mipt.oop.events.SensorEventType;
+import ru.sbt.mipt.oop.events.EventType;
 import ru.sbt.mipt.oop.events.handlers.DoorEventHandler;
 import ru.sbt.mipt.oop.events.handlers.EventHandler;
 import ru.sbt.mipt.oop.smartelements.Door;
@@ -22,7 +22,7 @@ class AlarmSystemDecoratorTest {
         EventHandler eventHandler = new DoorEventHandler(smartHome);
         AlarmSystem alarmSystem = new AlarmSystem(smartHome);
         alarmSystem.raiseAlarm();
-        SensorEvent doorOpen = new SensorEvent(SensorEventType.DOOR_CLOSED, "1");
+        SensorEvent doorOpen = new SensorEvent(EventType.DOOR_CLOSED, "1");
         eventHandler = new AlarmSystemDecorator(eventHandler, alarmSystem);
         eventHandler.handleEvent(doorOpen);
         assert(door1.isOpen());
@@ -36,7 +36,7 @@ class AlarmSystemDecoratorTest {
         EventHandler eventHandler = new DoorEventHandler(smartHome);
         AlarmSystem alarmSystem = new AlarmSystem(smartHome);
         alarmSystem.activate("java");
-        SensorEvent doorOpen = new SensorEvent(SensorEventType.DOOR_CLOSED, "1");
+        SensorEvent doorOpen = new SensorEvent(EventType.DOOR_CLOSED, "1");
         eventHandler = new AlarmSystemDecorator(eventHandler, alarmSystem);
         eventHandler.handleEvent(doorOpen);
         assert(door1.isOpen());
