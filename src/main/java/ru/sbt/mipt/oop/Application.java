@@ -1,6 +1,6 @@
 package ru.sbt.mipt.oop;
 
-import ru.sbt.mipt.oop.eventhandlers.CommonDoorEventHandler;
+import ru.sbt.mipt.oop.eventhandlers.DoorEventHandler;
 import ru.sbt.mipt.oop.eventhandlers.EventHandler;
 import ru.sbt.mipt.oop.eventhandlers.LightEventHandler;
 import ru.sbt.mipt.oop.eventhandlers.HallDoorEventHandler;
@@ -26,7 +26,7 @@ public class Application {
         // начинаем цикл обработки событий
         Collection<EventHandler> eventHandlers = Arrays.asList(
                 new LightEventHandler(),
-                new CommonDoorEventHandler(),
+                new DoorEventHandler(),
                 new HallDoorEventHandler());
 
         SensorEventProcessor eventProcessor = new SensorEventProcessorImpl(eventHandlers, new RandomSensorEventGenerator());
