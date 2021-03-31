@@ -1,26 +1,28 @@
 package ru.sbt.mipt.oop.events.handlers.decorators;
 
+import ru.sbt.mipt.oop.MessageSender;
 import ru.sbt.mipt.oop.alarm.AlarmSystem;
-import ru.sbt.mipt.oop.alarm.alarmstates.ActivatedState;
-import ru.sbt.mipt.oop.alarm.alarmstates.EmergencyState;
 import ru.sbt.mipt.oop.events.Event;
 import ru.sbt.mipt.oop.events.handlers.EventHandler;
 
-public class AlarmSystemDecorator extends EventHandlerDecorator{
+public class AlarmSystemDecorator implements EventHandler {
     private final AlarmSystem alarmSystem;
+    private final EventHandler eventHandler;
+    private final MessageSender sender;
 
-    public AlarmSystemDecorator(EventHandler eventHandler, AlarmSystem alarm) {
-        super(eventHandler);
+    public AlarmSystemDecorator(EventHandler eventHandler, AlarmSystem alarm, MessageSender sender) {
+        this.eventHandler = eventHandler;
         this.alarmSystem = alarm;
+        this.sender = sender;
     }
 
     @Override
     public void handleEvent(Event event) {
-        if (alarmSystem.getState() instanceof ActivatedState){
+        if (alarmSystem.isActivated()){
             alarmSystem.raiseAlarm();
         }
-        if (alarmSystem.getState() instanceof EmergencyState){
-            System.out.println("Включен режим тревоги, события не обрабатываются, отправлено смс.");
+        if (alarmSystem.isEmergency()){
+            sender.sendMessage("Включен режим тревоги, события не обрабатываются, отправлено смс.");
         }
         else{
             eventHandler.handleEvent(event);

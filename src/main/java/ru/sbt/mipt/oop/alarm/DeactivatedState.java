@@ -1,6 +1,4 @@
-package ru.sbt.mipt.oop.alarm.alarmstates;
-
-import ru.sbt.mipt.oop.alarm.AlarmSystem;
+package ru.sbt.mipt.oop.alarm;
 
 public class DeactivatedState implements AlarmSystemState {
     private final AlarmSystem alarmSystem;
@@ -12,11 +10,11 @@ public class DeactivatedState implements AlarmSystemState {
     @Override
     public void activate(String code) {
         this.alarmSystem.setState(new ActivatedState(this.alarmSystem, code));
-        System.out.println("Сигнализация влючена.");
+        alarmSystem.sendMessage("Сигнализация влючена.");
     }
 
     @Override
     public void deactivate(String code) {
-        System.out.println("Попытка выключить выключенную сигнализацию");
+        alarmSystem.sendMessage("Попытка выключить выключенную сигнализацию");
     }
 }

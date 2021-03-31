@@ -21,10 +21,11 @@ public class Application {
         SmartHome smartHome = new SmartHome();
         HomeDataReader reader = new HomeJsonDataReader("smart-home-1.js");
         smartHome = reader.readHomeData();
-        AlarmSystem alarmSystem = new AlarmSystem();
-        EventHandler lightEventHandler = new AlarmSystemDecorator(new LightEventHandler(smartHome), alarmSystem);
-        EventHandler doorEventHandler = new AlarmSystemDecorator(new DoorEventHandler(smartHome), alarmSystem);
-        EventHandler hallEventHandler = new AlarmSystemDecorator(new HallDoorEventHandler(smartHome), alarmSystem);
+        AlarmSystem alarmSystem = new AlarmSystem(new SmsSender());
+        MessageSender sender = new SmsSender();
+        EventHandler lightEventHandler = new AlarmSystemDecorator(new LightEventHandler(smartHome), alarmSystem, sender);
+        EventHandler doorEventHandler = new AlarmSystemDecorator(new DoorEventHandler(smartHome), alarmSystem, sender);
+        EventHandler hallEventHandler = new AlarmSystemDecorator(new HallDoorEventHandler(smartHome), alarmSystem, sender);
         EventHandler alarmEventHandler = new AlarmEventHandler(alarmSystem);
         // начинаем цикл обработки событий
         Collection<EventHandler> eventHandlers = Arrays.asList(

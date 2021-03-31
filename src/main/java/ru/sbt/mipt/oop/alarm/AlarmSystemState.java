@@ -1,4 +1,4 @@
-package ru.sbt.mipt.oop.alarm.alarmstates;
+package ru.sbt.mipt.oop.alarm;
 
 public interface AlarmSystemState {
     void activate(String code);

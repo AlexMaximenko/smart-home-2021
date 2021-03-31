@@ -8,7 +8,7 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 
 public class HomeJsonDataReader implements  HomeDataReader{
-    private String filePath;
+    private final String filePath;
 
     public HomeJsonDataReader(String filePath){
         this.filePath = filePath;

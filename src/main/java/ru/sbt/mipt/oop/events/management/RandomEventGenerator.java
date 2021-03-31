@@ -35,9 +35,6 @@ public class RandomEventGenerator implements EventGenerator {
     }
 
     private boolean isAlarmEventType(EventType eventType){
-        if (eventType.equals(EventType.ALARM_ACTIVATE) || eventType.equals(EventType.ALARM_DEACTIVATE)){
-            return true;
-        }
-        return false;
+        return eventType.equals(EventType.ALARM_ACTIVATE) || eventType.equals(EventType.ALARM_DEACTIVATE);
     }
 }

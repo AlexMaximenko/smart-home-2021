@@ -1,10 +1,8 @@
 package ru.sbt.mipt.oop.events.handlers;
 
 import org.junit.jupiter.api.Test;
+import ru.sbt.mipt.oop.SmsSender;
 import ru.sbt.mipt.oop.alarm.AlarmSystem;
-import ru.sbt.mipt.oop.alarm.alarmstates.ActivatedState;
-import ru.sbt.mipt.oop.alarm.alarmstates.DeactivatedState;
-import ru.sbt.mipt.oop.alarm.alarmstates.EmergencyState;
 import ru.sbt.mipt.oop.events.AlarmEvent;
 import ru.sbt.mipt.oop.events.EventType;
 import ru.sbt.mipt.oop.smartelements.Door;
@@ -21,11 +19,11 @@ class AlarmEventHandlerTest {
         Door door2 = new Door(false, "2");
         Room room = new Room(Collections.emptyList(), Arrays.asList(door1, door2), "testRoom");
         SmartHome smartHome = new SmartHome(Arrays.asList(room));
-        AlarmSystem alarmSystem = new AlarmSystem();
+        AlarmSystem alarmSystem = new AlarmSystem(new SmsSender());
         AlarmEventHandler handler = new AlarmEventHandler(alarmSystem);
         AlarmEvent event = new AlarmEvent(EventType.ALARM_ACTIVATE, "java");
         handler.handleEvent(event);
-        assert(alarmSystem.getState() instanceof ActivatedState);
+        assert(alarmSystem.isActivated());
     }
 
     @Test
@@ -34,12 +32,12 @@ class AlarmEventHandlerTest {
         Door door2 = new Door(false, "2");
         Room room = new Room(Collections.emptyList(), Arrays.asList(door1, door2), "testRoom");
         SmartHome smartHome = new SmartHome(Arrays.asList(room));
-        AlarmSystem alarmSystem = new AlarmSystem();
+        AlarmSystem alarmSystem = new AlarmSystem(new SmsSender());
         AlarmEventHandler handler = new AlarmEventHandler(alarmSystem);
         alarmSystem.activate("java");
         AlarmEvent event = new AlarmEvent(EventType.ALARM_DEACTIVATE, "java");
         handler.handleEvent(event);
-        assert(alarmSystem.getState() instanceof DeactivatedState);
+        assert(alarmSystem.isDeactivated());
     }
 
     @Test
@@ -48,11 +46,11 @@ class AlarmEventHandlerTest {
         Door door2 = new Door(false, "2");
         Room room = new Room(Collections.emptyList(), Arrays.asList(door1, door2), "testRoom");
         SmartHome smartHome = new SmartHome(Arrays.asList(room));
-        AlarmSystem alarmSystem = new AlarmSystem();
+        AlarmSystem alarmSystem = new AlarmSystem(new SmsSender());
         AlarmEventHandler handler = new AlarmEventHandler(alarmSystem);
         alarmSystem.activate("java");
         AlarmEvent event = new AlarmEvent(EventType.ALARM_DEACTIVATE, "not_java");
         handler.handleEvent(event);
-        assert(alarmSystem.getState() instanceof EmergencyState);
+        assert(alarmSystem.isEmergency());
     }
 }

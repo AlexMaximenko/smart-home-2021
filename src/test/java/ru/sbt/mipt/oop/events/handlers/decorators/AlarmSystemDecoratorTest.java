@@ -1,6 +1,7 @@
 package ru.sbt.mipt.oop.events.handlers.decorators;
 
 import org.junit.jupiter.api.Test;
+import ru.sbt.mipt.oop.SmsSender;
 import ru.sbt.mipt.oop.alarm.AlarmSystem;
 import ru.sbt.mipt.oop.events.SensorEvent;
 import ru.sbt.mipt.oop.events.EventType;
@@ -20,10 +21,10 @@ class AlarmSystemDecoratorTest {
         Room room = new Room(Collections.emptyList(), Arrays.asList(door1), "testRoom");
         SmartHome smartHome = new SmartHome(Arrays.asList(room));
         EventHandler eventHandler = new DoorEventHandler(smartHome);
-        AlarmSystem alarmSystem = new AlarmSystem();
+        AlarmSystem alarmSystem = new AlarmSystem(new SmsSender());
         alarmSystem.raiseAlarm();
         SensorEvent doorOpen = new SensorEvent(EventType.DOOR_CLOSED, "1");
-        eventHandler = new AlarmSystemDecorator(eventHandler, alarmSystem);
+        eventHandler = new AlarmSystemDecorator(eventHandler, alarmSystem, new SmsSender());
         eventHandler.handleEvent(doorOpen);
         assert(door1.isOpen());
     }
@@ -34,10 +35,10 @@ class AlarmSystemDecoratorTest {
         Room room = new Room(Collections.emptyList(), Arrays.asList(door1), "testRoom");
         SmartHome smartHome = new SmartHome(Arrays.asList(room));
         EventHandler eventHandler = new DoorEventHandler(smartHome);
-        AlarmSystem alarmSystem = new AlarmSystem();
+        AlarmSystem alarmSystem = new AlarmSystem(new SmsSender());
         alarmSystem.activate("java");
         SensorEvent doorOpen = new SensorEvent(EventType.DOOR_CLOSED, "1");
-        eventHandler = new AlarmSystemDecorator(eventHandler, alarmSystem);
+        eventHandler = new AlarmSystemDecorator(eventHandler, alarmSystem, new SmsSender());
         eventHandler.handleEvent(doorOpen);
         assert(door1.isOpen());
     }

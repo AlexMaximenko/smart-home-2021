@@ -1,16 +1,18 @@
 package ru.sbt.mipt.oop.alarm;
 
-import ru.sbt.mipt.oop.alarm.alarmstates.AlarmSystemState;
-import ru.sbt.mipt.oop.alarm.alarmstates.DeactivatedState;
-import ru.sbt.mipt.oop.alarm.alarmstates.EmergencyState;
+import ru.sbt.mipt.oop.MessageSender;
 
 public class AlarmSystem {
     private AlarmSystemState state;
-    private String code;
+    private final MessageSender sender;
 
-    public AlarmSystem() {
+    public AlarmSystem(MessageSender sender) {
+        this.sender = sender;
         this.state = new DeactivatedState(this);
-        this.code = null;
+    }
+
+    void sendMessage(String message){
+        sender.sendMessage(message);
     }
 
     public void activate(String code){
@@ -26,11 +28,22 @@ public class AlarmSystem {
         this.state = new EmergencyState(this);
     }
 
-    public void setState(AlarmSystemState state) {
+    void setState(AlarmSystemState state) {
         this.state = state;
     }
 
-    public AlarmSystemState getState() {
-        return state;
+    public boolean isActivated(){
+        if (this.state instanceof ActivatedState) { return true;}
+        return false;
+    }
+
+    public boolean isEmergency(){
+        if (this.state instanceof EmergencyState) { return true;}
+        return false;
+    }
+
+    public boolean isDeactivated(){
+        if (this.state instanceof DeactivatedState) { return true;}
+        return false;
     }
 }

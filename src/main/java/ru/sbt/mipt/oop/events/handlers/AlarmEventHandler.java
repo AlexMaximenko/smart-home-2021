@@ -24,7 +24,6 @@ public class AlarmEventHandler implements EventHandler{
     }
 
     private boolean isValidEvent(Event event){
-        if (event instanceof AlarmEvent) return true;
-        else return false;
+        return event instanceof AlarmEvent;
     }
 }

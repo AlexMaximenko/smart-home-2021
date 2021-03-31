@@ -1,6 +1,4 @@
-package ru.sbt.mipt.oop.alarm.alarmstates;
-
-import ru.sbt.mipt.oop.alarm.AlarmSystem;
+package ru.sbt.mipt.oop.alarm;
 
 public class ActivatedState implements AlarmSystemState {
     private final AlarmSystem alarmSystem;
@@ -13,18 +11,18 @@ public class ActivatedState implements AlarmSystemState {
 
     @Override
     public void activate(String code) {
-        System.out.println("Попытка активировать уже активированную сигнализацию");
+        alarmSystem.sendMessage("Попытка активировать уже активированную сигнализацию");
     }
 
     @Override
     public void deactivate(String code) {
         if (this.code == code) {
             this.alarmSystem.setState(new DeactivatedState(this.alarmSystem));
-            System.out.println("Введен правильный пароль, сигнализация отключена.");
+            alarmSystem.sendMessage("Введен правильный пароль, сигнализация отключена.");
         }
         else {
             this.alarmSystem.setState(new EmergencyState(this.alarmSystem));
-            System.out.println("Введен неправильный пароль, режим тревоги включен.");
+            alarmSystem.sendMessage("Введен неправильный пароль, режим тревоги включен.");
         }
     }
 }

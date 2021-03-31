@@ -11,7 +11,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 
 public class HomeJsonDataWriter implements HomeDataWriter{
-    private String filePath;
+    private final String filePath;
 
     public HomeJsonDataWriter(String filePath){
         this.filePath = filePath;
