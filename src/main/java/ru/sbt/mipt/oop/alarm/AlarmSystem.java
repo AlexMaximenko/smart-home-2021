@@ -24,7 +24,7 @@ public class AlarmSystem {
     }
 
     public void raiseAlarm(){
-        System.out.println("Включен режим тревоги, отправлено смс.");
+        sendMessage("Включен режим тревоги, отправлено смс.");
         this.state = new EmergencyState(this);
     }
 
@@ -33,17 +33,14 @@ public class AlarmSystem {
     }
 
     public boolean isActivated(){
-        if (this.state instanceof ActivatedState) { return true;}
-        return false;
+        return state instanceof ActivatedState;
     }
 
     public boolean isEmergency(){
-        if (this.state instanceof EmergencyState) { return true;}
-        return false;
+        return state instanceof EmergencyState;
     }
 
     public boolean isDeactivated(){
-        if (this.state instanceof DeactivatedState) { return true;}
-        return false;
+        return state instanceof DeactivatedState;
     }
 }
