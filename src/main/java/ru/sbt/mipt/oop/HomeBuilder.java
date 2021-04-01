@@ -1,11 +1,10 @@
 package ru.sbt.mipt.oop;
 
-import ru.sbt.mipt.oop.home.HomeJsonDataReader;
-import ru.sbt.mipt.oop.home.HomeJsonDataWriter;
-import ru.sbt.mipt.oop.home.SmartHome;
+import ru.sbt.mipt.oop.homewriter.HomeJsonDataWriter;
 import ru.sbt.mipt.oop.smartelements.Door;
 import ru.sbt.mipt.oop.smartelements.Light;
 import ru.sbt.mipt.oop.smartelements.Room;
+import ru.sbt.mipt.oop.smartelements.SmartHome;
 
 import java.io.IOException;
 import java.util.Arrays;

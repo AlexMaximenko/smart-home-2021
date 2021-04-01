@@ -105,7 +105,7 @@ public class EventCreatorConsumer {
 
 ```java
 public interface EventCreator {
-    public Event getNextEvent();
+    Event getNextEvent();
 }
 
 public class EventCreatorImpl implements EventCreator {
