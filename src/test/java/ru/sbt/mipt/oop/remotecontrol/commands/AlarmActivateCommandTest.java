@@ -1,6 +1,5 @@
 package ru.sbt.mipt.oop.remotecontrol.commands;
 
-import com.coolcompany.smarthome.events.SensorEventsManager;
 import org.junit.jupiter.api.Test;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.context.support.AbstractApplicationContext;
@@ -10,8 +9,6 @@ import ru.sbt.mipt.oop.alarm.AlarmSystem;
 import ru.sbt.mipt.oop.remotecontrol.RemoteControllerImpl;
 import ru.sbt.mipt.oop.smartelements.SmartHome;
 
-import static org.junit.jupiter.api.Assertions.*;
-
 class AlarmActivateCommandTest {
 
     @Test
@@ -19,7 +16,7 @@ class AlarmActivateCommandTest {
         AbstractApplicationContext context = new AnnotationConfigApplicationContext(ApplicationConfiguration.class);
         SmartHome smartHome = context.getBean(SmartHome.class);
         AlarmSystem alarmSystem = context.getBean(AlarmSystem.class);
-        RemoteControl remoteControl = new RemoteControllerImpl(smartHome, alarmSystem);
+        RemoteControl remoteControl = new RemoteControllerImpl(smartHome, alarmSystem, "Id1");
         remoteControl.onButtonPressed("A");
         assert(alarmSystem.isActivated());
     }

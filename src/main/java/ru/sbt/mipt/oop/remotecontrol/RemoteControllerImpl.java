@@ -12,10 +12,12 @@ public class RemoteControllerImpl implements RemoteControl {
     private final Map<String, Command> commands;
     private final SmartHome smartHome;
     private final AlarmSystem alarmSystem;
+    private final String rcId;
 
-    public RemoteControllerImpl(SmartHome smartHome, AlarmSystem alarmSystem) {
+    public RemoteControllerImpl(SmartHome smartHome, AlarmSystem alarmSystem, String rcId) {
         this.smartHome = smartHome;
         this.alarmSystem = alarmSystem;
+        this.rcId = rcId;
         this.commands = new HashMap<String, Command>();
         this.setDefaultButtons();
     }

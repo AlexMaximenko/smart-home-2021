@@ -10,8 +10,6 @@ import ru.sbt.mipt.oop.remotecontrol.RemoteControllerImpl;
 import ru.sbt.mipt.oop.smartelements.Light;
 import ru.sbt.mipt.oop.smartelements.SmartHome;
 
-import static org.junit.jupiter.api.Assertions.*;
-
 class TurnAllLightsOnCommandTest {
 
     @Test
@@ -19,7 +17,7 @@ class TurnAllLightsOnCommandTest {
         AbstractApplicationContext context = new AnnotationConfigApplicationContext(ApplicationConfiguration.class);
         SmartHome smartHome = context.getBean(SmartHome.class);
         AlarmSystem alarmSystem = context.getBean(AlarmSystem.class);
-        RemoteControl remoteControl = new RemoteControllerImpl(smartHome, alarmSystem);
+        RemoteControl remoteControl = new RemoteControllerImpl(smartHome, alarmSystem, "Id1");
         remoteControl.onButtonPressed("1");
         smartHome.execute(object -> {
             if (object instanceof Light){

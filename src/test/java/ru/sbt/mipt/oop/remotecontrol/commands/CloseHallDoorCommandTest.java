@@ -11,8 +11,6 @@ import ru.sbt.mipt.oop.smartelements.Door;
 import ru.sbt.mipt.oop.smartelements.Room;
 import ru.sbt.mipt.oop.smartelements.SmartHome;
 
-import static org.junit.jupiter.api.Assertions.*;
-
 class CloseHallDoorCommandTest {
 
     @Test
@@ -20,7 +18,7 @@ class CloseHallDoorCommandTest {
         AbstractApplicationContext context = new AnnotationConfigApplicationContext(ApplicationConfiguration.class);
         SmartHome smartHome = context.getBean(SmartHome.class);
         AlarmSystem alarmSystem = context.getBean(AlarmSystem.class);
-        RemoteControl remoteControl = new RemoteControllerImpl(smartHome, alarmSystem);
+        RemoteControl remoteControl = new RemoteControllerImpl(smartHome, alarmSystem, "Id1");
         remoteControl.onButtonPressed("C");
         smartHome.execute(object -> {
             if (object instanceof Room && ((Room) object).getName().equals("hall")){

@@ -11,8 +11,6 @@ import ru.sbt.mipt.oop.smartelements.Light;
 import ru.sbt.mipt.oop.smartelements.Room;
 import ru.sbt.mipt.oop.smartelements.SmartHome;
 
-import static org.junit.jupiter.api.Assertions.*;
-
 class TurnRoomLightsOnCommandTest {
 
     @Test
@@ -20,7 +18,7 @@ class TurnRoomLightsOnCommandTest {
         AbstractApplicationContext context = new AnnotationConfigApplicationContext(ApplicationConfiguration.class);
         SmartHome smartHome = context.getBean(SmartHome.class);
         AlarmSystem alarmSystem = context.getBean(AlarmSystem.class);
-        RemoteControl remoteControl = new RemoteControllerImpl(smartHome, alarmSystem);
+        RemoteControl remoteControl = new RemoteControllerImpl(smartHome, alarmSystem, "Id1");
         remoteControl.onButtonPressed("2");
         smartHome.execute(object -> {
             if (object instanceof Room && ((Room) object).getName().equals("hall")){
