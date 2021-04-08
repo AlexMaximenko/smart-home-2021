@@ -21,7 +21,7 @@ class AlarmSystemDecoratorTest {
         Room room = new Room(Collections.emptyList(), Arrays.asList(door1), "testRoom");
         SmartHome smartHome = new SmartHome(Arrays.asList(room));
         EventHandler eventHandler = new DoorEventHandler(smartHome);
-        AlarmSystem alarmSystem = new AlarmSystem(new SmsSender());
+        AlarmSystem alarmSystem = new AlarmSystem(new SmsSender(), "defaultPassword");
         alarmSystem.raiseAlarm();
         SensorEvent doorOpen = new SensorEvent(EventType.DOOR_CLOSED, "1");
         eventHandler = new AlarmSystemDecorator(eventHandler, alarmSystem, new SmsSender());
@@ -35,7 +35,7 @@ class AlarmSystemDecoratorTest {
         Room room = new Room(Collections.emptyList(), Arrays.asList(door1), "testRoom");
         SmartHome smartHome = new SmartHome(Arrays.asList(room));
         EventHandler eventHandler = new DoorEventHandler(smartHome);
-        AlarmSystem alarmSystem = new AlarmSystem(new SmsSender());
+        AlarmSystem alarmSystem = new AlarmSystem(new SmsSender(), "defaultPassword");
         alarmSystem.activate("java");
         SensorEvent doorOpen = new SensorEvent(EventType.DOOR_CLOSED, "1");
         eventHandler = new AlarmSystemDecorator(eventHandler, alarmSystem, new SmsSender());

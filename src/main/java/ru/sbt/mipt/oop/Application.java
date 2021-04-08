@@ -24,5 +24,4 @@ public class Application {
         SensorEventsManager sensorEventsManager = context.getBean(SensorEventsManager.class);
         sensorEventsManager.start();
     }
-
 }

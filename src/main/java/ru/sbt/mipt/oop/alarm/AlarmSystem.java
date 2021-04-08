@@ -5,9 +5,15 @@ import ru.sbt.mipt.oop.MessageSender;
 public class AlarmSystem {
     private AlarmSystemState state;
     private final MessageSender sender;
+    private final String defaultPassword;
 
-    public AlarmSystem(MessageSender sender) {
+    public String getDefaultPassword() {
+        return defaultPassword;
+    }
+
+    public AlarmSystem(MessageSender sender, String defaultPassword) {
         this.sender = sender;
+        this.defaultPassword = defaultPassword;
         this.state = new DeactivatedState(this);
     }
 

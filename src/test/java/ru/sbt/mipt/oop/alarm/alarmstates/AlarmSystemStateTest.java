@@ -9,7 +9,7 @@ class AlarmSystemStateTest {
     @Test
     void testActivation(){
         SmartHome smartHome = new SmartHome();
-        AlarmSystem alarmSystem = new AlarmSystem(new SmsSender());
+        AlarmSystem alarmSystem = new AlarmSystem(new SmsSender(), "defaultPassword");
         alarmSystem.activate("java");
         assert(alarmSystem.isActivated());
     }
@@ -17,7 +17,7 @@ class AlarmSystemStateTest {
     @Test
     void testCorrectDeactivation(){
         SmartHome smartHome = new SmartHome();
-        AlarmSystem alarmSystem = new AlarmSystem(new SmsSender());
+        AlarmSystem alarmSystem = new AlarmSystem(new SmsSender(), "defaultPassword");
         alarmSystem.activate("java");
         alarmSystem.deactivate("java");
         assert(alarmSystem.isDeactivated());
@@ -26,7 +26,7 @@ class AlarmSystemStateTest {
     @Test
     void testIncorrectDeactivation(){
         SmartHome smartHome = new SmartHome();
-        AlarmSystem alarmSystem = new AlarmSystem(new SmsSender());
+        AlarmSystem alarmSystem = new AlarmSystem(new SmsSender(), "defaultPassword");
         alarmSystem.activate("java");
         alarmSystem.deactivate("not_java");
         assert(alarmSystem.isEmergency());
@@ -35,7 +35,7 @@ class AlarmSystemStateTest {
     @Test
     void testEmergencyState(){
         SmartHome smartHome = new SmartHome();
-        AlarmSystem alarmSystem = new AlarmSystem(new SmsSender());
+        AlarmSystem alarmSystem = new AlarmSystem(new SmsSender(), "defaultPassword");
         alarmSystem.raiseAlarm();
         assert(alarmSystem.isEmergency());
 

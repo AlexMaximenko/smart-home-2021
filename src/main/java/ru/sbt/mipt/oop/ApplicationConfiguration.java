@@ -9,8 +9,6 @@ import ru.sbt.mipt.oop.events.handlers.decorators.AlarmSystemDecorator;
 import ru.sbt.mipt.oop.homereader.HomeJsonDataReader;
 import ru.sbt.mipt.oop.smartelements.SmartHome;
 
-import java.util.ArrayList;
-
 @Configuration
 public class ApplicationConfiguration {
 
@@ -36,7 +34,7 @@ public class ApplicationConfiguration {
 
     @Bean
     AlarmSystem alarmSystem(){
-        return new AlarmSystem(smsSender());
+        return new AlarmSystem(smsSender(), "defaultPassword");
     }
 
     @Bean
