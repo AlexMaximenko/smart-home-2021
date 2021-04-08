@@ -34,7 +34,7 @@ public class RemoteControllerImpl implements RemoteControl {
         commands.get(buttonCode).execute();
     }
 
-    public void registerButton(String buttonCode, Command command){
+    public void setButton(String buttonCode, Command command){
         commands.put(buttonCode, command);
     }
 }
