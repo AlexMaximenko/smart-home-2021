@@ -1,15 +1,17 @@
 package ru.sbt.mipt.oop;
 
-import ru.sbt.mipt.oop.eventhandlers.DoorEventHandler;
-import ru.sbt.mipt.oop.eventhandlers.EventHandler;
-import ru.sbt.mipt.oop.eventhandlers.LightEventHandler;
-import ru.sbt.mipt.oop.eventhandlers.HallDoorEventHandler;
-import ru.sbt.mipt.oop.eventmanagement.RandomSensorEventGenerator;
-import ru.sbt.mipt.oop.eventmanagement.SensorEventProcessor;
-import ru.sbt.mipt.oop.eventmanagement.SensorEventProcessorImpl;
-import ru.sbt.mipt.oop.home.HomeDataReader;
-import ru.sbt.mipt.oop.home.HomeJsonDataReader;
-import ru.sbt.mipt.oop.home.SmartHome;
+import com.coolcompany.smarthome.events.SensorEventsManager;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+import org.springframework.context.support.AbstractApplicationContext;
+import ru.sbt.mipt.oop.alarm.AlarmSystem;
+import ru.sbt.mipt.oop.events.handlers.*;
+import ru.sbt.mipt.oop.events.handlers.decorators.AlarmSystemDecorator;
+import ru.sbt.mipt.oop.events.management.RandomEventGenerator;
+import ru.sbt.mipt.oop.events.management.EventProcessor;
+import ru.sbt.mipt.oop.events.management.EventProcessorImpl;
+import ru.sbt.mipt.oop.homereader.HomeDataReader;
+import ru.sbt.mipt.oop.homereader.HomeJsonDataReader;
+import ru.sbt.mipt.oop.smartelements.SmartHome;
 
 import java.io.IOException;
 import java.util.Arrays;
@@ -17,19 +19,9 @@ import java.util.Collection;
 
 public class Application {
 
-    public static void main(String... args) throws IOException {
-        // считываем состояние дома из файла
-        SmartHome smartHome = new SmartHome();
-        HomeDataReader reader = new HomeJsonDataReader("smart-home-1.js");
-        smartHome = reader.readHomeData();
-
-        // начинаем цикл обработки событий
-        Collection<EventHandler> eventHandlers = Arrays.asList(
-                new LightEventHandler(),
-                new DoorEventHandler(),
-                new HallDoorEventHandler());
-
-        SensorEventProcessor eventProcessor = new SensorEventProcessorImpl(eventHandlers, new RandomSensorEventGenerator());
-        eventProcessor.startProcessingLoop(smartHome);
+    public static void main(String... args){
+        AbstractApplicationContext context = new AnnotationConfigApplicationContext(ApplicationConfiguration.class);
+        SensorEventsManager sensorEventsManager = context.getBean(SensorEventsManager.class);
+        sensorEventsManager.start();
     }
 }

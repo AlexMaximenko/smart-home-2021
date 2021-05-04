@@ -1,15 +1,14 @@
 package ru.sbt.mipt.oop.smartelements;
 
-import ru.sbt.mipt.oop.action.Action;
-import ru.sbt.mipt.oop.action.Actionable;
+import ru.sbt.mipt.oop.Action;
+import ru.sbt.mipt.oop.Actionable;
 
-import javax.accessibility.Accessible;
 import java.util.Collection;
 
 public class Room implements Actionable {
-    private Collection<Light> lights;
-    private Collection<Door> doors;
-    private String name;
+    private final Collection<Light> lights;
+    private final Collection<Door> doors;
+    private final String name;
 
     public Room(Collection<Light> lights, Collection<Door> doors, String name) {
         this.lights = lights;
