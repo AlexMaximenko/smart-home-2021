@@ -16,7 +16,7 @@ class AlarmActivateCommandTest {
         AbstractApplicationContext context = new AnnotationConfigApplicationContext(ApplicationConfiguration.class);
         SmartHome smartHome = context.getBean(SmartHome.class);
         AlarmSystem alarmSystem = context.getBean(AlarmSystem.class);
-        RemoteControl remoteControl = new RemoteControllerImpl(smartHome, alarmSystem, "Id1");
+        RemoteControl remoteControl = context.getBean(RemoteControllerImpl.class);
         remoteControl.onButtonPressed("A");
         assert(alarmSystem.isActivated());
     }

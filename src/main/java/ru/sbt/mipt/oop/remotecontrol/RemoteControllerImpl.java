@@ -14,26 +14,16 @@ public class RemoteControllerImpl implements RemoteControl {
     private final AlarmSystem alarmSystem;
     private final String rcId;
 
-    public RemoteControllerImpl(SmartHome smartHome, AlarmSystem alarmSystem, String rcId) {
+    public RemoteControllerImpl(SmartHome smartHome, AlarmSystem alarmSystem, String rcId, Map<String, Command> commands) {
         this.smartHome = smartHome;
         this.alarmSystem = alarmSystem;
         this.rcId = rcId;
-        this.commands = new HashMap<String, Command>();
-        this.setDefaultButtons();
-    }
-
-    private void setDefaultButtons(){
-        commands.put("A", new AlarmActivateCommand(this.alarmSystem, this.alarmSystem.getDefaultPassword()));
-        commands.put("B", new AlarmEmergencyCommand(this.alarmSystem));
-        commands.put("C", new CloseHallDoorCommand(this.smartHome));
-        commands.put("D", new TurnAllLightsOffCommand(this.smartHome));
-        commands.put("1", new TurnAllLightsOnCommand(this.smartHome));
-        commands.put("2", new TurnRoomLightsOnCommand("hall", this.smartHome));
+        this.commands = commands;
     }
 
     @Override
     public void onButtonPressed(String buttonCode) {
-        commands.get(buttonCode).execute();
+        if (commands.containsKey(buttonCode)) commands.get(buttonCode).execute();
     }
 
     public void setButton(String buttonCode, Command command){

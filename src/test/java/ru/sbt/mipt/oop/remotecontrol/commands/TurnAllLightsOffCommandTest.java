@@ -17,7 +17,7 @@ class TurnAllLightsOffCommandTest {
         AbstractApplicationContext context = new AnnotationConfigApplicationContext(ApplicationConfiguration.class);
         SmartHome smartHome = context.getBean(SmartHome.class);
         AlarmSystem alarmSystem = context.getBean(AlarmSystem.class);
-        RemoteControl remoteControl = new RemoteControllerImpl(smartHome, alarmSystem, "Id1");
+        RemoteControl remoteControl = context.getBean(RemoteControl.class);
         remoteControl.onButtonPressed("D");
         smartHome.execute(object -> {
             if (object instanceof Light){
