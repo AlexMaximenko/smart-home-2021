@@ -10,17 +10,18 @@ import ru.sbt.mipt.oop.homereader.HomeJsonDataReader;
 import ru.sbt.mipt.oop.smartelements.SmartHome;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
 
 @Configuration
 public class ApplicationConfiguration {
 
     @Bean
-    SensorEventsManager sensorEventsManager(){
+    SensorEventsManager sensorEventsManager(Collection<com.coolcompany.smarthome.events.EventHandler> eventHandlers){
         SensorEventsManager eventsManager = new SensorEventsManager();
-        eventsManager.registerEventHandler(new EventHandlerAdapter(lightEventHandler()));
-        eventsManager.registerEventHandler(new EventHandlerAdapter(doorEventHandler()));
-        eventsManager.registerEventHandler(new EventHandlerAdapter(hallDoorEventHandler()));
-        eventsManager.registerEventHandler(new EventHandlerAdapter(alarmEventHandler()));
+        for (com.coolcompany.smarthome.events.EventHandler eventHandler : eventHandlers) {
+            eventsManager.registerEventHandler(eventHandler);
+        }
         return eventsManager;
     }
 
@@ -40,23 +41,23 @@ public class ApplicationConfiguration {
     }
 
     @Bean
-    EventHandler lightEventHandler(){
-        return new AlarmSystemDecorator(new LightEventHandler(smartHome()), alarmSystem(), smsSender());
+    com.coolcompany.smarthome.events.EventHandler lightEventHandler(){
+        return new EventHandlerAdapter(new AlarmSystemDecorator(new LightEventHandler(smartHome()), alarmSystem(), smsSender()));
     }
 
     @Bean
-    EventHandler hallDoorEventHandler(){
-        return new AlarmSystemDecorator(new HallDoorEventHandler(smartHome()), alarmSystem(), smsSender());
+    com.coolcompany.smarthome.events.EventHandler hallDoorEventHandler(){
+        return new EventHandlerAdapter(new AlarmSystemDecorator(new HallDoorEventHandler(smartHome()), alarmSystem(), smsSender()));
     }
 
     @Bean
-    EventHandler doorEventHandler(){
-        return new AlarmSystemDecorator(new DoorEventHandler(smartHome()), alarmSystem(), smsSender());
+    com.coolcompany.smarthome.events.EventHandler doorEventHandler(){
+        return new EventHandlerAdapter(new AlarmSystemDecorator(new DoorEventHandler(smartHome()), alarmSystem(), smsSender()));
     }
 
 
     @Bean
-    EventHandler alarmEventHandler(){
-        return new AlarmEventHandler(alarmSystem());
+    com.coolcompany.smarthome.events.EventHandler alarmEventHandler(){
+        return new EventHandlerAdapter(new AlarmEventHandler(alarmSystem()));
     }
 }
