@@ -12,6 +12,8 @@ import ru.sbt.mipt.oop.smartelements.SmartHome;
 
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -27,7 +29,7 @@ class EventHandlerAdapterTest {
         DoorEventHandler handler = new DoorEventHandler(smartHome);
         CCSensorEvent event1 = new CCSensorEvent(libraryEventType, "1");
         CCSensorEvent event2 = new CCSensorEvent(libraryEventType, "2");
-        EventHandlerAdapter handlerAdapter = new EventHandlerAdapter(handler);
+        EventHandlerAdapter handlerAdapter = new EventHandlerAdapter(handler, getCCEventToEventMap());
 
         handlerAdapter.handleEvent(event1);
         handlerAdapter.handleEvent(event2);
@@ -54,7 +56,7 @@ class EventHandlerAdapterTest {
         LightEventHandler handler = new LightEventHandler(smartHome);
         CCSensorEvent event1 = new CCSensorEvent(libraryEventType, "1");
         CCSensorEvent event2 = new CCSensorEvent(libraryEventType, "2");
-        EventHandlerAdapter handlerAdapter = new EventHandlerAdapter(handler);
+        EventHandlerAdapter handlerAdapter = new EventHandlerAdapter(handler, getCCEventToEventMap());
 
         handlerAdapter.handleEvent(event1);
         handlerAdapter.handleEvent(event2);
@@ -69,5 +71,16 @@ class EventHandlerAdapterTest {
         handlerAdapter.handleEvent(event2);
         assertFalse(light1.isOn());
         assertFalse(light2.isOn());
+    }
+
+    Map<String, EventType> getCCEventToEventMap(){
+        HashMap<String, EventType> ccEventTypeToEventTypeMap = new HashMap<String, EventType>();
+        ccEventTypeToEventTypeMap.put("LightIsOn", EventType.LIGHT_ON);
+        ccEventTypeToEventTypeMap.put("LightIsOff", EventType.LIGHT_OFF);
+        ccEventTypeToEventTypeMap.put("DoorIsOpen", EventType.DOOR_OPEN);
+        ccEventTypeToEventTypeMap.put("DoorIsClosed", EventType.DOOR_CLOSED);
+        ccEventTypeToEventTypeMap.put("DoorIsLocked", EventType.DOOR_LOCKED);
+        ccEventTypeToEventTypeMap.put("DoorIsUnlocked", EventType.DOOR_UNLOCKED);
+        return ccEventTypeToEventTypeMap;
     }
 }

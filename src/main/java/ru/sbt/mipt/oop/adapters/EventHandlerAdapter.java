@@ -10,26 +10,21 @@ import java.util.Map;
 
 public class EventHandlerAdapter implements EventHandler {
     private final ru.sbt.mipt.oop.events.handlers.EventHandler eventHandler;
-    private final Map<String, EventType> stringToEventTypeMap;
+    private final Map<String, EventType> ccEventTypeToEventTypeMap;
 
-    public EventHandlerAdapter(ru.sbt.mipt.oop.events.handlers.EventHandler eventHandler) {
+    public EventHandlerAdapter(ru.sbt.mipt.oop.events.handlers.EventHandler eventHandler, Map<String, EventType> ccEventTypeToEventTypeMap) {
         this.eventHandler = eventHandler;
-        this.stringToEventTypeMap = new HashMap<String, EventType>();
-        this.fillStringToEventTypeMap();
-    }
-
-    private void fillStringToEventTypeMap(){
-        this.stringToEventTypeMap.put("LightIsOn", EventType.LIGHT_ON);
-        this.stringToEventTypeMap.put("LightIsOff", EventType.LIGHT_OFF);
-        this.stringToEventTypeMap.put("DoorIsOpen", EventType.DOOR_OPEN);
-        this.stringToEventTypeMap.put("DoorIsClosed", EventType.DOOR_CLOSED);
-        this.stringToEventTypeMap.put("DoorIsLocked", EventType.DOOR_LOCKED);
-        this.stringToEventTypeMap.put("DoorIsUnlocked", EventType.DOOR_UNLOCKED);
+        this.ccEventTypeToEventTypeMap = ccEventTypeToEventTypeMap;
     }
 
     @Override
     public void handleEvent(CCSensorEvent event) {
-        EventType type = stringToEventTypeMap.get(event.getEventType());
+        if (!ccEventTypeToEventTypeMap.containsKey(event.getEventType()))
+        {
+            return;
+        }
+
+        EventType type = ccEventTypeToEventTypeMap.get(event.getEventType());
         this.eventHandler.handleEvent(new SensorEvent(type, event.getObjectId()));
     }
 }
